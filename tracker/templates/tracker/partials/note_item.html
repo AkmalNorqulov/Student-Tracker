@@ -1,0 +1,32 @@
+<div
+  id="note-{{ note.id }}"
+  class="bg-gradient-to-br from-white to-gray-50 p-4 mb-2 rounded-2xl shadow-lg hover:shadow-xl transition border border-gray-200 relative"
+>
+  <div class="flex justify-between items-start">
+    <p class="text-gray-800 text-base leading-relaxed break-words">
+      {{ note.content }}
+    </p>
+    <div class="space-x-2 text-sm">
+      <button
+        hx-get="{% url 'edit_note' note.id %}"
+        hx-target="#note-{{ note.id }}"
+        hx-swap="outerHTML"
+        class="text-blue-500 hover:text-blue-700"
+      >
+        ✏️
+      </button>
+      <form
+        hx-post="{% url 'delete_note' note.id %}"
+        hx-target="#note-{{ note.id }}"
+        hx-swap="outerHTML"
+        class="inline"
+      >
+        {% csrf_token %}
+        <button class="text-red-500 hover:text-red-700">🗑️</button>
+      </form>
+    </div>
+  </div>
+  <p class="text-xs text-gray-400 mt-2">
+    🕒 {{ note.updated_at|date:"M d, Y H:i" }}
+  </p>
+</div>

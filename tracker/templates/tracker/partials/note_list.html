@@ -1,0 +1,5 @@
+{% for note in notes %}
+  {% include "tracker/partials/note_item.html" %}
+{% empty %}
+  <p class="text-gray-400">No notes yet.</p>
+{% endfor %}

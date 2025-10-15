@@ -1,0 +1,52 @@
+{% extends 'tracker/base.html' %}
+{% block title %}{{ classroom.name }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  <!-- Class Info -->
+  <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-5 border border-gray-200 dark:border-gray-700">
+    <h1 class="text-2xl font-semibold text-blue-700 dark:text-blue-400">{{ classroom.name }}</h1>
+    {% if classroom.subject %}
+      <p class="text-gray-600 dark:text-gray-300 mt-1">{{ classroom.subject }}</p>
+    {% endif %}
+    {% if classroom.description %}
+      <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">{{ classroom.description }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Enrolled Students -->
+  <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-5 border border-gray-200 dark:border-gray-700">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">👩‍🎓 O'quvchilar</h2>
+      <div class="mt-3 sm:mt-0 flex flex-col sm:flex-row gap-2">
+        <a href="{% url 'enroll_student' classroom.id %}" 
+           class="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800 px-3 py-2 rounded-lg text-sm font-medium text-center">
+          Mavjud o'quvchini sinfga qo'shish
+        </a>
+        <a href="{% url 'add_student' classroom.id %}" 
+           class="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded-lg text-sm font-medium text-center">
+          + Yangi O'quvchi yaratish
+        </a>
+      </div>
+    </div>
+
+    {% if enrollments %}
+      <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+        {% for e in enrollments %}
+          <li>
+            <a href="{% url 'student_class_detail' classroom.id e.student.id %}" 
+               class="block py-3 px-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition">
+              <div class="flex items-center justify-between">
+                <span class="font-medium text-gray-800 dark:text-gray-100">{{ e.student.full_name }}</span>
+                <span class="text-gray-400 text-sm">›</span>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-gray-500 dark:text-gray-400 italic">Hech qanday o'quvchi yo'q.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

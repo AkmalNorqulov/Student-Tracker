@@ -1,0 +1,64 @@
+{% extends 'tracker/base.html' %}
+{% block title %}Yangi o‘quvchini qo‘shish — {{ classroom.name }}{% endblock %}
+{% block content %}
+
+<div class="max-w-lg mx-auto bg-white border border-gray-200 shadow-xl rounded-2xl p-6 mt-8">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">
+    🧑‍🎓 {{ classroom.name }} sinfiga yangi o‘quvchini qo‘shish
+  </h1>
+
+  <form method="post" action="{% url 'add_student' classroom.id %}" class="space-y-5">
+    {% csrf_token %}
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">To‘liq ism</label>
+      <input 
+        type="text" 
+        name="full_name"
+        value="{{ form.full_name.value|default_if_none:'' }}"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+        placeholder="Masalan: Akmal Norqulov"
+        required
+      >
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Elektron pochta (ixtiyoriy)</label>
+      <input 
+        type="email" 
+        name="email"
+        value="{{ form.email.value|default_if_none:'' }}"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+        placeholder="example@gmail.com"
+      >
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Yosh (ixtiyoriy)</label>
+      <input 
+        type="number" 
+        name="age"
+        value="{{ form.age.value|default_if_none:'' }}"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+        placeholder="Masalan: 14"
+      >
+    </div>
+
+    <div class="pt-3 flex justify-between items-center">
+      <button 
+        type="submit" 
+        class="bg-blue-600 text-white font-medium px-6 py-2.5 rounded-lg shadow hover:bg-blue-700 transition duration-200"
+      >
+      Qo‘shish va ro‘yxatdan o‘tkazish
+      </button>
+      <a 
+        href="{% url 'class_detail' classroom.id %}" 
+        class="text-gray-600 hover:text-gray-900 transition"
+      >
+        Bekor qilish
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

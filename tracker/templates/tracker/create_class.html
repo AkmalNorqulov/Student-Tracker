@@ -1,0 +1,53 @@
+{% extends 'tracker/base.html' %}
+{% block title %}Yangi sinf yaratish{% endblock %}
+{% block content %}
+
+<div class="max-w-lg mx-auto bg-white border border-gray-200 shadow-xl rounded-2xl p-6 mt-8">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">
+    🏫 Yangi sinf yaratish
+  </h1>
+
+  <form method="post" action="{% url 'create_class' %}" class="space-y-5">
+    {% csrf_token %}
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Sinf nomi</label>
+      <input
+        type="text"
+        name="name"
+        value="{{ form.name.value|default_if_none:'' }}"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+        placeholder="Masalan: 8-A sinf"
+        required
+      >
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Tavsif (ixtiyoriy)</label>
+      <textarea
+        name="description"
+        rows="3"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+        placeholder="Masalan: Ingliz tili sinfi yoki Dasturlash bo‘yicha guruh"
+      >{{ form.description.value|default_if_none:'' }}</textarea>
+    </div>
+
+    <div class="pt-3 flex justify-between items-center">
+      <button
+        type="submit"
+        class="bg-blue-600 text-white font-medium px-6 py-2.5 rounded-lg shadow hover:bg-blue-700 transition duration-200"
+      >
+        💾 Saqlash
+      </button>
+
+      <a
+        href="{% url 'class_list' %}"
+        class="border border-red-400 text-red-500 hover:bg-red-50 font-medium px-6 py-2.5 rounded-lg transition duration-200"
+      >
+        ✖ Bekor qilish
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

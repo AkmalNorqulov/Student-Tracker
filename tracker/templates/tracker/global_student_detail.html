@@ -1,0 +1,65 @@
+{% extends 'tracker/base.html' %}
+{% block title %}{{ student.full_name }} — Profil{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+  <!-- Student Info -->
+  <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-8">
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-3xl font-semibold text-gray-800">
+        👨‍🎓 {{ student.full_name }}
+      </h1>
+      <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+        ID: {{ student.id }}
+      </span>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4 text-gray-700">
+      <p><strong>📅 Tug‘ilgan sana:</strong> {{ student.birth_date|default:"Ma'lumot yo‘q" }}</p>
+      <p><strong>📞 Telefon:</strong> {{ student.phone|default:"Ma'lumot yo‘q" }}</p>
+      <p><strong>📧 Email:</strong> {{ student.email|default:"Ma'lumot yo‘q" }}</p>
+      <p><strong>🏠 Manzil:</strong> {{ student.address|default:"Ma'lumot yo‘q" }}</p>
+    </div>
+  </div>
+
+  <!-- Enrolled Classes -->
+  <div class="mb-10">
+    <h2 class="text-2xl font-medium text-gray-800 mb-4">📘 Yozilgan sinflar</h2>
+
+    {% if student.enrollments.all %}
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {% for e in student.enrollments.all %}
+      <button
+        hx-get="{% url 'load_notes_for_class' e.id %}"
+        hx-target="#notes-section"
+        hx-swap="innerHTML"
+        class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition text-left"
+      >
+        <h3 class="text-blue-600 font-semibold text-lg">{{ e.classroom.name }}</h3>
+        <p class="text-gray-500 text-sm mt-1">{{ e.classroom.subject }}</p>
+      </button>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500">Bu o‘quvchi hali hech bir sinfga yozilmagan.</p>
+    {% endif %}
+  </div>
+
+  <!-- Notes Section -->
+  <div id="notes-section" class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
+    <p class="text-gray-400 text-lg text-center">
+      ✏️ Yuqoridagi sinflardan birini tanlang, shunda o‘sha sinfdagi eslatmalar ko‘rinadi.
+    </p>
+  </div>
+</div>
+
+<style>
+  body {
+    background-color: #f9fafb;
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #60a5fa;
+  }
+</style>
+{% endblock %}
