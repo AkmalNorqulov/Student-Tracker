@@ -3,17 +3,21 @@
     class="bg-white p-4 mb-2 rounded-lg shadow hover:shadow-md transition border border-gray-200"
 >
     <div class="flex justify-between items-start">
-        <p class="text-gray-800 text-base break-words">{{ note.content }}</p>
+        <p class="text-gray-800 text-base break-words pr-3">{{ note.content }}</p>
 
-        <div class="space-x-2 text-sm flex-shrink-0">
+        <div class="flex space-x-2 flex-shrink-0">
+            <!-- Edit Button -->
             <button 
                 hx-get="{% url 'edit_note' note.id %}"
                 hx-target="#note-{{ note.id }}"
                 hx-swap="outerHTML"
-                class="text-blue-500 hover:text-blue-700"
+                class="w-9 h-9 flex items-center justify-center border border-blue-400 text-blue-500 rounded-full hover:bg-blue-50 hover:border-blue-500 active:scale-95 transition text-lg"
+                title="Tahrirlash"
             >
                 ✏️
             </button>
+
+            <!-- Delete Button -->
             <form 
                 hx-post="{% url 'delete_note' note.id %}"
                 hx-target="#note-{{ note.id }}"
@@ -21,10 +25,16 @@
                 class="inline"
             >
                 {% csrf_token %}
-                <button class="text-red-500 hover:text-red-700">🗑️</button>
+                <button 
+                    class="w-9 h-9 flex items-center justify-center border border-red-400 text-red-500 rounded-full hover:bg-red-50 hover:border-red-500 active:scale-95 transition text-lg"
+                    title="O‘chirish"
+                >
+                    🗑️
+                </button>
             </form>
         </div>
     </div>
+
     <p class="text-xs text-gray-400 mt-2">
         🕒 {{ note.updated_at|date:"M d, Y H:i" }}
     </p>

@@ -14,6 +14,8 @@ urlpatterns = [
     # ------------------------------------------------------
     path('class/<int:class_id>/add-student/', views.add_student, name='add_student'),
     path('class/<int:class_id>/enroll-student/', views.enroll_student, name='enroll_student'),
+    path('students/<int:pk>/edit/', views.edit_student, name='edit_student'),
+
 
     # ------------------------------------------------------
     # 🧍 STUDENT DETAIL (within specific class)

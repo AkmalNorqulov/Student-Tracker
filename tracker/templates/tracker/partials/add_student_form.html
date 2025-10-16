@@ -1,11 +1,80 @@
-<h2 class="text-xl font-semibold mb-4">🆕 Yangi o‘quvchi qo‘shish</h2>
+<h2 class="text-xl font-semibold mb-4">Yangi o‘quvchi qo‘shish</h2>
 <form id="student-form" method="post" hx-post="{% url 'add_student_global' %}" hx-target="#modal-content" hx-swap="outerHTML">
   {% csrf_token %}
   <div class="space-y-3 mb-4">
-    <input type="text" name="full_name" placeholder="Ism familiya" required class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500">
-    <input type="email" name="email" placeholder="Email (ixtiyoriy)" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500">
-    <input type="number" name="age" placeholder="Yoshi (ixtiyoriy)" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500">
+
+  <!-- Required field -->
+  <input 
+    type="text" 
+    name="full_name" 
+    placeholder="Ism familiya" 
+    required 
+    class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500"
+  >
+
+  <!-- Toggle Button -->
+  <button 
+    type="button"
+    id="toggle-optional"
+    class="text-green-600 text-sm font-medium hover:underline focus:outline-none"
+  >
+    ➕ Ko‘proq ma’lumot (ixtiyoriy)
+  </button>
+
+  <!-- Optional fields (hidden by default) -->
+  <div id="optional-fields" class="hidden space-y-3 mt-2">
+
+    <input 
+      type="email" 
+      name="email" 
+      placeholder="Email" 
+      class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500"
+    >
+
+    <input 
+      type="number" 
+      name="age" 
+      placeholder="Yoshi" 
+      class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500"
+    >
+
+    <input 
+      type="text" 
+      name="address" 
+      placeholder="Manzil" 
+      class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500"
+    >
+
+    <input 
+      type="tel" 
+      name="phone" 
+      placeholder="Telefon raqami" 
+      pattern="[0-9+ ]*" 
+      class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500"
+    >
+
+    <input 
+      type="date" 
+      name="birth_date" 
+      placeholder="Tug‘ilgan sana" 
+      class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500"
+    >
   </div>
+</div>
+
+<!-- Toggle Script -->
+<script>
+  const toggleBtn = document.getElementById('toggle-optional');
+  const optionalFields = document.getElementById('optional-fields');
+
+  toggleBtn.addEventListener('click', () => {
+    optionalFields.classList.toggle('hidden');
+    toggleBtn.textContent = optionalFields.classList.contains('hidden')
+      ? '➕ Ko‘proq ma’lumot (ixtiyoriy)'
+      : '➖ Yashirish';
+  });
+</script>
+
   <div class="flex justify-end space-x-2">
     <button type="button" onclick="document.getElementById('modal').classList.add('hidden')" class="px-3 py-1 border border-red-400 text-red-600 rounded hover:bg-red-50">
       Bekor qilish

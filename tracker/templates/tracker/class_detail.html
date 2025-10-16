@@ -5,14 +5,26 @@
 <div class="space-y-6">
   <!-- Class Info -->
   <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-5 border border-gray-200 dark:border-gray-700">
-    <h1 class="text-2xl font-semibold text-blue-700 dark:text-blue-400">{{ classroom.name }}</h1>
-    {% if classroom.subject %}
-      <p class="text-gray-600 dark:text-gray-300 mt-1">{{ classroom.subject }}</p>
-    {% endif %}
-    {% if classroom.description %}
-      <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">{{ classroom.description }}</p>
-    {% endif %}
+  <div class="flex items-start justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold text-blue-700 dark:text-blue-400">{{ classroom.name }}</h1>
+      {% if classroom.subject %}
+        <p class="text-gray-600 dark:text-gray-300 mt-1">{{ classroom.subject }}</p>
+      {% endif %}
+      {% if classroom.description %}
+        <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">{{ classroom.description }}</p>
+      {% endif %}
+    </div>
+
+    <a 
+      href="{% url 'class_list' %}"
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-500 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 font-medium text-sm transition duration-200 ml-4"
+    >
+      ⬅️ Barcha sinflar
+    </a>
   </div>
+</div>
+
 
   <!-- Enrolled Students -->
   <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-5 border border-gray-200 dark:border-gray-700">

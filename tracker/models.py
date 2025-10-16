@@ -26,8 +26,11 @@ class Class(models.Model):
 class Student(models.Model):
     full_name = models.CharField(max_length=150)
     email = models.EmailField(blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
     age = models.PositiveIntegerField(blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
+    address = models.TextField(blank=True, null=True)
 
     # Many-to-many through Enrollment
     classes = models.ManyToManyField('Class', through='Enrollment', related_name='students')

@@ -224,3 +224,29 @@ def add_student_global(request):
         form = StudentCreateForm()
 
     return render(request, "tracker/partials/add_student_form.html", {"form": form})
+
+
+
+# STUDENT EDIT
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Student
+from .forms import StudentEditForm
+
+def edit_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    next_url = request.GET.get('next') or request.POST.get('next')
+
+    if request.method == "POST":
+        form = StudentCreateForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect(next_url or 'all_students')
+    else:
+        form = StudentCreateForm(instance=student)
+
+    return render(request, 'tracker/edit_student.html', {
+        'form': form,
+        'student': student,
+        'next': next_url,
+    })

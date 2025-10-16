@@ -1,0 +1,84 @@
+{% extends "./base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="max-w-xl mx-auto mt-10 bg-white border border-gray-200 rounded-2xl shadow-lg p-8 transition hover:shadow-xl">
+
+  <!-- Header -->
+  <div class="mb-6 text-center">
+    <div class="inline-flex items-center justify-center w-12 h-12 bg-green-100 text-green-600 rounded-full mb-3 shadow-sm">
+      ✏️
+    </div>
+    <h2 class="text-2xl font-bold text-gray-800">
+      {{ student.full_name }} ma’lumotlarini tahrirlash
+    </h2>
+    <p class="text-gray-500 text-sm mt-1">O‘zgartirishlaringizni saqlang</p>
+  </div>
+
+  <!-- Form -->
+  <form method="post" class="space-y-5">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        {{ form.full_name.label_tag }}
+        {{ form.full_name|add_class:"w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" }}
+        {{ form.full_name.errors }}
+      </div>
+      <div>
+        {{ form.email.label_tag }}
+        {{ form.email|add_class:"w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" }}
+        {{ form.email.errors }}
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        {{ form.age.label_tag }}
+        {{ form.age|add_class:"w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" }}
+        {{ form.age.errors }}
+      </div>
+      <div>
+        {{ form.birth_date.label_tag }}
+        {{ form.birth_date|add_class:"w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" }}
+        {{ form.birth_date.errors }}
+      </div>
+    </div>
+
+    <div>
+      {{ form.phone.label_tag }}
+      {{ form.phone|add_class:"w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" }}
+      {{ form.phone.errors }}
+    </div>
+
+    <div>
+      {{ form.address.label_tag }}
+      {{ form.address|add_class:"w-full border border-gray-300 rounded-lg p-3 min-h-[100px] resize-y focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" }}
+      {{ form.address.errors }}
+    </div>
+
+    {% if next %}
+      <input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+
+    <!-- Buttons -->
+    <div class="flex gap-3 pt-4">
+      <button 
+        type="submit"
+        class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2.5 rounded-xl shadow-md hover:shadow-lg font-medium transition duration-200"
+      >
+        💾 Saqlash
+      </button>
+      <a 
+        href="{{ next|default:'/' }}" 
+        class="flex-1 border border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-800 py-2.5 rounded-xl text-center font-medium transition duration-200"
+      >
+        ✖️ Bekor qilish
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
